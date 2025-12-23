@@ -3,14 +3,38 @@ FINAL_EMOTION_CLASSES = ["happy","sad","angry","stressed","neutral"]
 
 # Text dataset label mapping
 TEXT_TO_FINAL = {
+    #HAPPY LABELS
     "joy" : "happy",
     "happiness" : "happy",
+    "ammusement" : "happy",
+    "love" : "happy",
+    "excitement" : "happy",
+    "pride" : "happy",
+    "gratitude" : "happy",
+    "relief" : "happy",
+
+    # NEUTRAL LABELS
     "neutral" : "neutral",
+    "realization" : "neutral",
+    "confusion" : "neutral",
+    "curiosity" : "neutral",
+    "surprise" : "neutral",
+
+    # SAD LABELS
     "sadness" : "sad",
+    "disappointment" : "sad",
+    "grief" : "sad",
+    "remorse" : "sad",
+    "embarrassment" : "sad",
+
+    # ANGRY LABELS
     "anger" : "angry",
-    "frustration" : "angry",
+    "annoyance" : "angry",
+    "disapproval" : "angry",
+
+    # STRESSED LABELS
     "stress" : "stressed",
-    "worry" : "stressed",
+    "nervousness" : "stressed",
     "fear" : "stressed",
     "anxiety" : "stressed",
 }
