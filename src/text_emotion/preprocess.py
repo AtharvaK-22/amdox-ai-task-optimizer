@@ -1,14 +1,14 @@
 import re
 import nltk
 import pandas as pd
-from nltk.corpus import stopwards
+from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer 
 from src.utils.label_mapping import TEXT_TO_FINAL
 
 nltk.download('stopwords')
 nltk.download('wordnet')
 
-stop_wards = set(stopwards.words('english'))
+stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
 def clean_text(text):
@@ -19,7 +19,7 @@ def clean_text(text):
     tokens = [
         lemmatizer.lemmatize(word)
         for word in tokens
-        if word not in stop_wards
+        if word not in stop_words
     ]
     return " ".join(tokens)
 
