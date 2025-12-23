@@ -38,6 +38,7 @@ TEXT_TO_FINAL = {
     "fear" : "stressed",
     "anxiety" : "stressed",
 }
+PRIORITY_ORDER = ["stressed","angry","sad","neutral", "happy"]
 
 # DeepFace dataset label mapping
 DEEPFACE_TO_FINAL = {

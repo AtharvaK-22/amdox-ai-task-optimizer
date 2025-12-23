@@ -3,7 +3,7 @@ import nltk
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer 
-from src.utils.label_mapping import TEXT_TO_FINAL
+from src.utils.label_mapping import TEXT_TO_FINAL, PRIORITY_ORDER
 
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -23,12 +23,27 @@ def clean_text(text):
     ]
     return " ".join(tokens)
 
+def get_dominant_emotion(row, emotion_columns):
+    active_emotions = [ e for e in emotion_columns if row[e] == 1]
+    mapped = [
+        TEXT_TO_FINAL[e]
+        for e in active_emotions
+        if e in TEXT_TO_FINAL
+    ]
+    for emotion in PRIORITY_ORDER:
+        if emotion in mapped:
+            return emotion
+    return None
+
 def preprocess_dataset(input_path, output_path):
     df = pd.read_csv(input_path)
     #rename columns to standard names if needed
-    df.columns = ["text", "label"]
+    emotion_columns = [
+        col for col in df.columns
+        if col in TEXT_TO_FINAL
+    ]
     # map labels to final emotion classes
-    df["label"] = df["label"].map(TEXT_TO_FINAL)
+    df["label"] = df.apply(lambda row: get_dominant_emotion(row, emotion_columns), axis = 1)
     # drop unmapped labels
     df = df.dropna(subset = ["label"])
     # clean text data
