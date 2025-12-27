@@ -5,7 +5,7 @@ FINAL_EMOTION_CLASSES = ["happy","sad","angry","stressed","neutral"]
 TEXT_TO_FINAL = {
     #HAPPY LABELS
     "joy" : "happy",
-    "happiness" : "happy",
+    # "happiness" : "happy",
     "ammusement" : "happy",
     "love" : "happy",
     "excitement" : "happy",
