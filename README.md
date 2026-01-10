@@ -108,7 +108,14 @@ python download_nltk_data.py
 
 ## 🎮 Usage
 
-### Text Emotion Analysis
+### Run the Complete Application
+```bash
+python dashboard/main.py
+```
+
+### Individual Module Usage
+
+#### Text Emotion Analysis
 ```python
 from src.text_emotion.predict import predict_text_emotion
 
@@ -137,6 +144,11 @@ final_emotion, confidence = fuse_emotions(text_result, face_result)
 ```
 
 ## 🧪 Testing
+
+### Run Complete Application
+```bash
+python dashboard/main.py
+```
 
 ### Run Text Emotion Tests
 ```bash
