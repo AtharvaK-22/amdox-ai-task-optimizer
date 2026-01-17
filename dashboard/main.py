@@ -9,7 +9,7 @@ text_result = predict_text_emotion(text)
 face_result = detect_face_emotion()
 
 final_emotion, confidence = fuse_emotions(text_result, face_result)
-tasks = recommend_task(final_emotion)
+tasks = recommend_task(final_emotion, confidence)
 
 print("\nFinal Emotion:", final_emotion)
 print("Confidence:", confidence)
