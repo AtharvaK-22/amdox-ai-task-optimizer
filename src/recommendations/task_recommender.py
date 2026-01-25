@@ -20,20 +20,52 @@ TASK_MAP = {
         "high": ["Cool-down break", "Avoid meetings"]
     }
 }
-
+STRESS_SOFT_THRESHOLD = 0.35
 HIGH_CONF = 0.8
 MODERATE_CONF = 0.6
 LOW_CONF = 0.4
 
 def recommend_task(final_emotion, confidence):
-    if confidence < LOW_CONF:                      # VERY LOW CONFIDENCE -> No Strong Recommendation
-        return "No strong recommendation (insufficient confidence)" 
-    elif confidence < MODERATE_CONF:               # LOW CONFIDENCE -> Neutral-safe Tasks
-        return "['Routine Tasks', 'Regular work items', 'Documentation']"
-    elif confidence < HIGH_CONF:                   # MODERATE CONFIDENCE -> Soft Recommendation
-        return TASK_MAP.get(final_emotion, TASK_MAP["neutral"])["moderate"]
-    # HIGH CONFIDENCE -> Strong Recommendation
-    return TASK_MAP.get(final_emotion, TASK_MAP["neutral"])["high"]
+
+    # Special handling for stress
+    if final_emotion == "stressed" and (HIGH_CONF >= confidence >= STRESS_SOFT_THRESHOLD):
+        return {
+            "emotion": "stressed",
+            "confidence": confidence,
+            "recommendation_level": "soft",
+            "tasks": [
+                "Reduce workload temporarily",
+                "Focus on low-pressure tasks",
+                "Take short breaks if needed"
+            ]
+        }
+
+    # Very low confidence → neutral
+    if confidence < LOW_CONF:
+        return {
+            "emotion": "neutral",
+            "confidence": confidence,
+            "recommendation_level": "none",
+            "tasks": ["No strong recommendation (low confidence)"]
+        }
+
+    # Low confidence → neutral-safe
+    if confidence < MODERATE_CONF:
+        return {
+            "emotion": final_emotion,
+            "confidence": confidence,
+            "recommendation_level": "low",
+            "tasks": TASK_MAP.get("neutral", [])
+        }
+    
+    # Moderate / High confidence
+    level = "moderate" if confidence < HIGH_CONF else "high"
+    return {
+        "emotion": final_emotion,
+        "confidence": confidence,
+        "recommendation_level": level,
+        "tasks": TASK_MAP.get(final_emotion, TASK_MAP["neutral"])
+    }
 
 # Sample testing
 # if __name__ == "__main__":
